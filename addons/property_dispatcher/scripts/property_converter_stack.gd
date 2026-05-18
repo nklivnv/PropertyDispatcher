@@ -28,7 +28,7 @@ func _update_target_objects() -> void:
 
 func update() -> void:
 	
-	if not allow_editor and Engine.is_editor_hint(): push_warning(get_class(), ".update(): allow_editor != true")
+	if not allow_editor and Engine.is_editor_hint(): push_warning(get_class(), ".update() - allow_editor != true")
 	else:
 		var converted_value: Variant = get_value()
 		for i in target_count:
