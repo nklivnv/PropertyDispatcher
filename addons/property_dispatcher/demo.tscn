@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://b8owugise4tea"]
+
+[ext_resource type="Script" uid="uid://ck1m20ijit8oe" path="res://addons/property_dispatcher/scripts/property_converter_stack.gd" id="1_2ne14"]
+[ext_resource type="Script" uid="uid://cirmb3ydqflt5" path="res://addons/property_dispatcher/scripts/value_converter.gd" id="2_jyu4x"]
+[ext_resource type="Script" uid="uid://chstux5gi55y0" path="res://addons/property_dispatcher/scripts/value_converter_expression.gd" id="3_2vefn"]
+[ext_resource type="Script" uid="uid://da5j5ey50ct2r" path="res://addons/property_dispatcher/scripts/value_converter_shift.gd" id="4_wn1m8"]
+[ext_resource type="Script" uid="uid://bsr1oimve0m1d" path="res://addons/property_dispatcher/scripts/value_converter_spring.gd" id="5_jyu4x"]
+[ext_resource type="Script" uid="uid://gfioavgdqs7k" path="res://addons/property_dispatcher/scripts/value_converter_swap.gd" id="6_2vefn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ryfo4"]
+
+[sub_resource type="Sky" id="Sky_afb70"]
+sky_material = SubResource("ProceduralSkyMaterial_ryfo4")
+
+[sub_resource type="Environment" id="Environment_i84v4"]
+background_mode = 2
+sky = SubResource("Sky_afb70")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryfo4"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 0.5019608)
+
+[sub_resource type="SphereMesh" id="SphereMesh_jyu4x"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_afb70"]
+shading_mode = 0
+albedo_color = Color(0, 0.4833331, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wn1m8"]
+
+[sub_resource type="Resource" id="Resource_kpycj"]
+script = ExtResource("3_2vefn")
+expression = "value.get_shifted()"
+metadata/_custom_type_script = "uid://chstux5gi55y0"
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ogmbv"]
+sky_horizon_color = Color(0.5087398, 0.32624286, 0.17310727, 1)
+sky_energy_multiplier = 1.7
+ground_bottom_color = Color(0.30197346, 0.25873113, 0.21011516, 1)
+ground_horizon_color = Color(0.7925762, 0.47620285, 3.85046e-07, 1)
+
+[sub_resource type="Sky" id="Sky_0qmpd"]
+sky_material = SubResource("ProceduralSkyMaterial_ogmbv")
+
+[sub_resource type="Resource" id="Resource_80le4"]
+script = ExtResource("4_wn1m8")
+array = [SubResource("Sky_0qmpd"), SubResource("Sky_afb70")]
+index = 1
+metadata/_custom_type_script = "uid://da5j5ey50ct2r"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jyu4x"]
+frequency = 0.001
+fractal_type = 0
+
+[sub_resource type="Resource" id="Resource_wn1m8"]
+script = ExtResource("3_2vefn")
+include_engine_singletons = true
+expression = "value * noise.get_noise_1d(Time.get_ticks_msec())"
+input_names = PackedStringArray("noise")
+input_values = [SubResource("FastNoiseLite_jyu4x")]
+metadata/_custom_type_script = "uid://chstux5gi55y0"
+
+[sub_resource type="Resource" id="Resource_ogmbv"]
+script = ExtResource("5_jyu4x")
+frequency = 8.52
+metadata/_custom_type_script = "uid://bsr1oimve0m1d"
+
+[sub_resource type="Resource" id="Resource_2vefn"]
+script = ExtResource("5_jyu4x")
+metadata/_custom_type_script = "uid://bsr1oimve0m1d"
+
+[sub_resource type="Resource" id="Resource_ryfo4"]
+script = ExtResource("6_2vefn")
+metadata/_custom_type_script = "uid://gfioavgdqs7k"
+
+[node name="Demo" type="Node" unique_id=353291517]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1171289594]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 8.645, 12.555)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=888461819]
+environment = SubResource("Environment_i84v4")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1133463664]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0768106, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=530371290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66291785, 0, 0)
+material_override = SubResource("StandardMaterial3D_ryfo4")
+mesh = SubResource("SphereMesh_jyu4x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D" unique_id=1766418600]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.367833, 0, 0)
+material_override = SubResource("StandardMaterial3D_afb70")
+mesh = SubResource("BoxMesh_wn1m8")
+
+[node name="SkyShifterExpression" type="Node" parent="." unique_id=1659813395]
+script = ExtResource("1_2ne14")
+allow_editor = true
+_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_kpycj")])
+_target_object_paths = Array[NodePath]([NodePath("../WorldEnvironment:environment:environment:environment:environment:environment:environment:environment:environment")])
+_target_objects = Array[Object]([SubResource("Environment_i84v4")])
+_target_property_paths = Array[NodePath]([NodePath("sky")])
+stack/0/converter = SubResource("Resource_kpycj")
+object = SubResource("Resource_80le4")
+property_path = NodePath("")
+_object = SubResource("Resource_80le4")
+
+[node name="SkyShifterIndex" type="Node" parent="." unique_id=455146826]
+script = ExtResource("1_2ne14")
+allow_editor = true
+_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_80le4")])
+_target_object_paths = Array[NodePath]([NodePath("")])
+_target_objects = Array[Object]([SubResource("Environment_i84v4")])
+_target_property_paths = Array[NodePath]([NodePath("sky")])
+stack/0/converter = SubResource("Resource_80le4")
+stack/0/object = SubResource("Environment_i84v4")
+object = SubResource("Resource_80le4")
+property_path = NodePath("index")
+_object = SubResource("Resource_80le4")
+
+[node name="ValueSmoother" type="Node" parent="." unique_id=418585295]
+script = ExtResource("1_2ne14")
+allow_editor = true
+_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_wn1m8"), SubResource("Resource_ogmbv"), SubResource("Resource_2vefn")])
+_target_object_paths = Array[NodePath]([NodePath(""), NodePath("../Node3D/MeshInstance3D"), NodePath("../Node3D/MeshInstance3D2")])
+_target_objects = Array[Object]([null, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66291785, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_ryfo4"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_jyu4x"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
+, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.367833, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_afb70"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("BoxMesh_wn1m8"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
+])
+_target_property_paths = Array[NodePath]([NodePath("position:x"), NodePath("position:x"), NodePath("position:x")])
+stack/0/converter = SubResource("Resource_wn1m8")
+stack/0/object = null
+stack/1/converter = SubResource("Resource_ogmbv")
+stack/2/converter = SubResource("Resource_2vefn")
+update_mode = 1
+object = null
+value = 6.375
+_object = null
+
+[node name="VisibleToggler" type="Node" parent="." unique_id=663119253]
+script = ExtResource("1_2ne14")
+allow_editor = true
+_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_ryfo4")])
+_target_object_paths = Array[NodePath]([NodePath("../Node3D")])
+_target_objects = Array[Object]([Object(Node3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0768106, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":null)
+])
+_target_property_paths = Array[NodePath]([NodePath("visible")])
+stack/0/converter = SubResource("Resource_ryfo4")
+object_path = NodePath("../Node3D")
+property_path = NodePath("visible")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1040729677]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=161745146]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1978510956]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Next Sky"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2028471992]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Toggle visible"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="SkyShifterIndex" method="update"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="VisibleToggler" method="update"]
