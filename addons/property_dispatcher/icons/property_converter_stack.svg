@@ -13,3 +13,14 @@
 	<line x1="16" y1="6" x2="16" y2="26" stroke="#fff" stroke-width="4" stroke-linecap="round" />
 	<circle cx="16" cy="16" r="4" fill="#fff" />
 </svg>
+
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+	<path id="path" d="M 16 0 L 16 6 A 10 10 0 0 0 8 22" stroke-width="4" stroke="white" stroke-linejoin="round"
+		stroke-linecap="round" fill="none" />
+
+	<path d="M 16 32 L 16 26 A 10 10 0 0 0 24 10" stroke-width="4" stroke="white" stroke-linejoin="round"
+		stroke-linecap="round" fill="none" />
+
+	<circle cx="16" cy="16" r="4" fill="white" />
+</svg> -->
