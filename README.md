@@ -13,7 +13,7 @@
 - **PropertyConverterStack** – chain multiple converters and write the result to several target properties.
 - **Ready ValueConverter resources**:
   - `ValueConverterCurve` – remap floats with a `Curve`.
-  - `ValueConverterExpression` – evaluate custom GDScript expressions (access input values and singletons).
+  - `ValueConverterExpression` – evaluate custom GDScript expressions (access input value and Engine singletons).
   - `ValueConverterMap` – dictionary‑based replacement.
   - `ValueConverterShift` – cyclic array shift.
   - `ValueConverterSpring` – spring dynamics (smooth following).
@@ -34,7 +34,7 @@
 - **PropertyConverterStack** – цепочка конвертеров с записью результата в несколько целевых свойств.
 - **Готовые ресурсы ValueConverter**:
   - `ValueConverterCurve` – преобразование через кривую `Curve`.
-  - `ValueConverterExpression` – вычисление выражений GDScript (доступ к входным значениям и синглтонам).
+  - `ValueConverterExpression` – вычисление выражений GDScript (доступ к входному значению и синглтонам движка).
   - `ValueConverterMap` – замена по словарю.
   - `ValueConverterShift` – циклический сдвиг по массиву.
   - `ValueConverterSpring` – пружинная динамика (плавное следование).
