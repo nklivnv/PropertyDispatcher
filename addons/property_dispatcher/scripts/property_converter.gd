@@ -10,5 +10,5 @@ class_name PropertyConverter
 
 
 func update() -> void:
-	if not allow_editor and Engine.is_editor_hint(): push_warning(get_class(), ".update() - allow_editor != true")
+	if not allow_editor and Engine.is_editor_hint(): push_warning("PropertyConverter.update() - allow_editor != true")
 	elif converter: set_value(converter.convert(get_value()))
