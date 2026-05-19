@@ -15,7 +15,7 @@
   - `ValueConverterCurve` – remap floats with a `Curve`.
   - `ValueConverterExpression` – evaluate custom GDScript expressions (access input values and singletons).
   - `ValueConverterMap` – dictionary‑based replacement.
-  - `ValueConverterShift` – cyclic array shift (carousel).
+  - `ValueConverterShift` – cyclic array shift.
   - `ValueConverterSpring` – spring dynamics (smooth following).
   - `ValueConverterStack` – compose several converters into one.
   - `ValueConverterSwap` – toggle between two values.
@@ -33,10 +33,10 @@
 - **PropertyConverter** – применение `ValueConverter` перед записью значения.
 - **PropertyConverterStack** – цепочка конвертеров с записью результата в несколько целевых свойств.
 - **Готовые ресурсы ValueConverter**:
-  - `ValueConverterCurve` – преобразование через кривую (`Curve`).
+  - `ValueConverterCurve` – преобразование через кривую `Curve`.
   - `ValueConverterExpression` – вычисление выражений GDScript (доступ к входным значениям и синглтонам).
   - `ValueConverterMap` – замена по словарю.
-  - `ValueConverterShift` – циклический сдвиг по массиву (карусель).
+  - `ValueConverterShift` – циклический сдвиг по массиву.
   - `ValueConverterSpring` – пружинная динамика (плавное следование).
   - `ValueConverterStack` – композиция нескольких конвертеров.
   - `ValueConverterSwap` – переключение между двумя значениями.
