@@ -10,7 +10,7 @@ class_name ValueConverterSpring
 
 func convert(target: Variant) -> Variant:
 	if not [speed, value].all(is_instance_of.bind(typeof(target))):
-		push_error(get_class(), ".convert() - Type error")
+		push_error("ValueConverterSpring.convert() - Type error")
 		return target
 	
 	var delta: float = minf(1.0 / Engine.get_frames_per_second(), 0.033)
