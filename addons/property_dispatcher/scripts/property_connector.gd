@@ -86,31 +86,31 @@ func _validate_property(property: Dictionary) -> void:
 
 
 func _get(property: StringName) -> Variant:
-	if property.begins_with("stack/"):
-		var slice_1: String = property.get_slice("/", 1) 
-		if not slice_1.is_valid_int(): return
-		var index: int = slice_1.to_int()
-		match property.get_slice("/", 2):
-			"converter": return _converters[index]
-			"object_path": return target_get_object_path(index)
-			"object": return target_get_object(index)
-			"property_path": return target_get_property_path(index)
-			"value": return target_get_value(index)
+	if not property.begins_with("stack/"): return
+	var slice_1: String = property.get_slice("/", 1) 
+	if not slice_1.is_valid_int(): return
+	var index: int = slice_1.to_int()
+	match property.get_slice("/", 2):
+		"converter": return _converters[index]
+		"object_path": return target_get_object_path(index)
+		"object": return target_get_object(index)
+		"property_path": return target_get_property_path(index)
+		"value": return target_get_value(index)
 	return 
 
 
 func _set(property: StringName, new: Variant) -> bool:
-	if property.begins_with("stack/"):
-		var slice_1: String = property.get_slice("/", 1)
-		if not slice_1.is_valid_int(): return false
-		var index: int = slice_1.to_int()
-		match property.get_slice("/", 2):
-			"converter": _converters[index] = new
-			"object_path": target_set_object_path(index, new)
-			"object": target_set_object(index, new)
-			"property_path": target_set_property_path(index, new)
-			"value": target_set_value(index, new)
-			_: return false
+	if not property.begins_with("stack/"): return false
+	var slice_1: String = property.get_slice("/", 1)
+	if not slice_1.is_valid_int(): return false
+	var index: int = slice_1.to_int()
+	match property.get_slice("/", 2):
+		"converter": _converters[index] = new
+		"object_path": target_set_object_path(index, new)
+		"object": target_set_object(index, new)
+		"property_path": target_set_property_path(index, new)
+		"value": target_set_value(index, new)
+		_: return false
 	return true
 
 
