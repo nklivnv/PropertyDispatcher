@@ -1,4 +1,4 @@
-# Property Dispatcher/Converter for Godot 4
+# Property Dispatcher/Converter/Connector for Godot 4
 
 ---
 
@@ -10,7 +10,7 @@
 
 - **PropertyDispatcher** – bind any object property to a node with automatic read/write.
 - **PropertyConverter** – apply a `ValueConverter` before writing the value.
-- **PropertyConverterStack** – chain multiple converters and write the result to several target properties.
+- **PropertyConnector** – chain multiple converters and write the result to several target properties.
 - **Ready ValueConverter resources**:
   - `ValueConverterCurve` – remap floats with a `Curve`.
   - `ValueConverterExpression` – evaluate custom GDScript expressions (access input value and Engine singletons).
@@ -31,7 +31,7 @@
 
 - **PropertyDispatcher** – привязка свойства объекта к узлу с автоматическим чтением/записью.
 - **PropertyConverter** – применение `ValueConverter` перед записью значения.
-- **PropertyConverterStack** – цепочка конвертеров с записью результата в несколько целевых свойств.
+- **PropertyConnector** – цепочка конвертеров с записью результата в несколько целевых свойств.
 - **Готовые ресурсы ValueConverter**:
   - `ValueConverterCurve` – преобразование через кривую `Curve`.
   - `ValueConverterExpression` – вычисление выражений GDScript (доступ к входному значению и синглтонам движка).

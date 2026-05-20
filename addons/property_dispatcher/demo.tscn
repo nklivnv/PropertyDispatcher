@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8owugise4tea"]
 
-[ext_resource type="Script" uid="uid://ck1m20ijit8oe" path="res://addons/property_dispatcher/scripts/property_converter_stack.gd" id="1_2ne14"]
+[ext_resource type="Script" uid="uid://ck1m20ijit8oe" path="res://addons/property_dispatcher/scripts/property_connector.gd" id="1_2ne14"]
 [ext_resource type="Script" uid="uid://cirmb3ydqflt5" path="res://addons/property_dispatcher/scripts/value_converter.gd" id="2_jyu4x"]
 [ext_resource type="Script" uid="uid://chstux5gi55y0" path="res://addons/property_dispatcher/scripts/value_converter_expression.gd" id="3_2vefn"]
 [ext_resource type="Script" uid="uid://da5j5ey50ct2r" path="res://addons/property_dispatcher/scripts/value_converter_shift.gd" id="4_wn1m8"]

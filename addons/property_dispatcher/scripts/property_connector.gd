@@ -1,7 +1,7 @@
 @tool
-@icon("../icons/property_converter_stack.svg")
+@icon("../icons/property_connector.svg")
 extends PropertyDispatcher
-class_name PropertyConverterStack 
+class_name PropertyConnector
 
 
 @export_tool_button("Update") var update_action := update
@@ -28,7 +28,7 @@ func _update_target_objects() -> void:
 
 func update() -> void:
 	
-	if not allow_editor and Engine.is_editor_hint(): push_warning("PropertyConverterStack.update() - allow_editor != true")
+	if not allow_editor and Engine.is_editor_hint(): push_warning("PropertyConnector.update() - allow_editor != true")
 	else:
 		var converted_value: Variant = get_value()
 		for i in target_count:
