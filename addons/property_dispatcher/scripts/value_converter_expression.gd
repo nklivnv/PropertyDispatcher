@@ -6,8 +6,11 @@ class_name ValueConverterExpression
 const FUNCS: GDScript = preload("funcs.gd")
 
 
-static var _engine_singletons: Array = Array(Engine.get_singleton_list()).map(Engine.get_singleton)
+static var _engine_singletons: Array
 var _expr: Expression
+
+
+@export_tool_button("Convert Empty") var convert_empty_action := convert.bind(null)
 
 
 @export var include_engine_singletons: bool:
@@ -22,14 +25,6 @@ var _expr: Expression
 		FUNCS.SingleCall.request(_update_expression)
 
 
-func _update_expression() -> void:
-		_expr = Expression.new()
-		var names := PackedStringArray(["value"]) + input_names
-		if include_engine_singletons: names += Engine.get_singleton_list()
-		if _expr.parse(expression, names) != OK: _expr = null
-		#_singletons = Array(Engine.get_singleton_list()).map(Engine.get_singleton) if _expr else []
-
-
 @export var input_names: PackedStringArray:
 	set(new):
 		input_names = new
@@ -39,13 +34,26 @@ func _update_expression() -> void:
 @export var input_values: Array
 
 
-@export_custom(PROPERTY_HINT_NODE_TYPE, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NIL_IS_VARIANT | PROPERTY_USAGE_READ_ONLY)
-var converted_value: Variant
+#@export_custom(PROPERTY_HINT_NODE_TYPE, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NIL_IS_VARIANT | PROPERTY_USAGE_READ_ONLY)
+@export var value: Variant
+
+
+static func _update_engine_singlitons() -> void:
+	_engine_singletons = Array(Engine.get_singleton_list()).map(Engine.get_singleton)
+
+
+func _update_expression() -> void:
+	_expr = Expression.new()
+	var names := PackedStringArray(["value"]) + input_names
+	if include_engine_singletons:
+		_update_engine_singlitons()
+		names += Engine.get_singleton_list()
+	if _expr.parse(expression, names) != OK: _expr = null
 
 
 func convert(what: Variant) -> Variant:
 	var values: Array = [what]
 	if input_values: values += input_values
 	if include_engine_singletons: values += _engine_singletons
-	converted_value = _expr.execute(values, self) if _expr else what
-	return converted_value
+	value = _expr.execute(values, self) if _expr else what
+	return value
