@@ -92,7 +92,8 @@ func _validate_property(p: Dictionary) -> void:
 			p.usage = (PROPERTY_USAGE_DEFAULT if object else PROPERTY_USAGE_NONE) | PROPERTY_USAGE_NIL_IS_VARIANT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 		"value":
 			if object and property_path: p.type = typeof(get_value())
-			p.usage = (PROPERTY_USAGE_EDITOR if object else PROPERTY_USAGE_DEFAULT) | PROPERTY_USAGE_NIL_IS_VARIANT
+			if object and is_same(object, get_value()): p.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY
+			else: p.usage = (PROPERTY_USAGE_EDITOR if object else PROPERTY_USAGE_DEFAULT) | PROPERTY_USAGE_NIL_IS_VARIANT
 
 
 func _property_can_revert(property: StringName) -> bool:
