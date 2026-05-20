@@ -88,7 +88,7 @@ func _validate_property(p: Dictionary) -> void:
 		"property_path":
 			p.type = TYPE_STRING
 			p.hint = PROPERTY_HINT_ENUM_SUGGESTION
-			if _object != self: p.hint_string = ",".join(FUNCS.get_object_property_names(object)) if object else ""
+			p.hint_string = ",".join(FUNCS.get_object_property_names(object)) if object and not is_same(object, self) else ""
 			p.usage = (PROPERTY_USAGE_DEFAULT if object else PROPERTY_USAGE_NONE) | PROPERTY_USAGE_NIL_IS_VARIANT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 		"value":
 			if object and property_path: p.type = typeof(get_value())
