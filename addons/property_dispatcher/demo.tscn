@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b8owugise4tea"]
 
-[ext_resource type="Script" uid="uid://ck1m20ijit8oe" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/property_connector.gd" id="1_2ne14"]
-[ext_resource type="Script" uid="uid://cirmb3ydqflt5" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/value_converter.gd" id="2_jyu4x"]
-[ext_resource type="Script" uid="uid://chstux5gi55y0" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/value_converter_expression.gd" id="3_2vefn"]
-[ext_resource type="Script" uid="uid://da5j5ey50ct2r" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/value_converter_shift.gd" id="4_wn1m8"]
-[ext_resource type="Script" uid="uid://bsr1oimve0m1d" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/value_converter_spring.gd" id="5_jyu4x"]
-[ext_resource type="Script" uid="uid://gfioavgdqs7k" path="res://_/EXPERIMENTAL/dispatch_tools/property_dispatcher/scripts/value_converter_swap.gd" id="6_2vefn"]
+[ext_resource type="Script" uid="uid://8l1htsyb3ji1" path="res://addons/property_dispatcher/scripts/property_connector.gd" id="1_2ne14"]
+[ext_resource type="Script" uid="uid://bwpay356mpycm" path="res://addons/property_dispatcher/scripts/value_converter.gd" id="2_jyu4x"]
+[ext_resource type="Script" uid="uid://x2rub5gjlo2a" path="res://addons/property_dispatcher/scripts/value_converter_expression.gd" id="3_2vefn"]
+[ext_resource type="Script" uid="uid://csiehks2jg0r" path="res://addons/property_dispatcher/scripts/value_converter_shift.gd" id="4_wn1m8"]
+[ext_resource type="Script" uid="uid://ddiqdiv2pwmtg" path="res://addons/property_dispatcher/scripts/value_converter_spring.gd" id="5_jyu4x"]
+[ext_resource type="Script" uid="uid://bn1kmmt8u0u2m" path="res://addons/property_dispatcher/scripts/value_converter_swap.gd" id="6_2vefn"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ryfo4"]
 
@@ -35,7 +35,6 @@ albedo_color = Color(0, 0.4833331, 1, 1)
 script = ExtResource("3_2vefn")
 expression = "value.get_shifted()"
 value = null
-metadata/_custom_type_script = "uid://chstux5gi55y0"
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ogmbv"]
 sky_horizon_color = Color(0.5087398, 0.32624286, 0.17310727, 1)
@@ -59,7 +58,6 @@ sky_material = SubResource("ProceduralSkyMaterial_kr5t7")
 script = ExtResource("4_wn1m8")
 array = [SubResource("Sky_0qmpd"), SubResource("Sky_afb70"), SubResource("Sky_v1000")]
 index = 1
-metadata/_custom_type_script = "uid://da5j5ey50ct2r"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jyu4x"]
 frequency = 0.001
@@ -71,21 +69,18 @@ include_engine_singletons = true
 expression = "value * noise.get_noise_1d(Time.get_ticks_msec())"
 input_names = PackedStringArray("noise")
 input_values = [SubResource("FastNoiseLite_jyu4x")]
-value = -2.6131207309663296
-metadata/_custom_type_script = "uid://chstux5gi55y0"
+value = -2.539273403584957
 
 [sub_resource type="Resource" id="Resource_ogmbv"]
 script = ExtResource("5_jyu4x")
 frequency = 8.52
-metadata/_custom_type_script = "uid://bsr1oimve0m1d"
 
 [sub_resource type="Resource" id="Resource_2vefn"]
 script = ExtResource("5_jyu4x")
-metadata/_custom_type_script = "uid://bsr1oimve0m1d"
 
-[sub_resource type="Resource" id="Resource_ryfo4"]
+[sub_resource type="Resource" id="Resource_bloln"]
 script = ExtResource("6_2vefn")
-metadata/_custom_type_script = "uid://gfioavgdqs7k"
+metadata/_custom_type_script = "uid://bn1kmmt8u0u2m"
 
 [node name="Demo" type="Node" unique_id=353291517]
 
@@ -99,12 +94,12 @@ environment = SubResource("Environment_i84v4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0768106, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=530371290]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7578746, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16409199, 0, 0)
 material_override = SubResource("StandardMaterial3D_ryfo4")
 mesh = SubResource("SphereMesh_jyu4x")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D" unique_id=1766418600]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7906081, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18493551, 0, 0)
 material_override = SubResource("StandardMaterial3D_afb70")
 mesh = SubResource("BoxMesh_wn1m8")
 
@@ -137,8 +132,8 @@ _object = SubResource("Resource_80le4")
 script = ExtResource("1_2ne14")
 _converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_wn1m8"), SubResource("Resource_ogmbv"), SubResource("Resource_2vefn")])
 _target_object_paths = Array[NodePath]([NodePath(""), NodePath("../Node3D/MeshInstance3D"), NodePath("../Node3D/MeshInstance3D2")])
-_target_objects = Array[Object]([null, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7578746, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_ryfo4"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_jyu4x"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
-, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7906081, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_afb70"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("BoxMesh_wn1m8"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
+_target_objects = Array[Object]([null, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16409199, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_ryfo4"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("SphereMesh_jyu4x"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
+, Object(MeshInstance3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18493551, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":SubResource("StandardMaterial3D_afb70"),"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"mesh":SubResource("BoxMesh_wn1m8"),"skin":null,"skeleton":NodePath(""),"surface_material_override/0":null,"script":null)
 ])
 _target_property_paths = Array[NodePath]([NodePath("position:x"), NodePath("position:x"), NodePath("position:x")])
 stack/0/converter = SubResource("Resource_wn1m8")
@@ -153,12 +148,12 @@ _object = null
 
 [node name="VisibleToggler" type="Node" parent="." unique_id=663119253]
 script = ExtResource("1_2ne14")
-_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_ryfo4")])
+_converters = Array[ExtResource("2_jyu4x")]([SubResource("Resource_bloln")])
 _target_object_paths = Array[NodePath]([NodePath("../Node3D")])
 _target_objects = Array[Object]([Object(Node3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0768106, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"script":null)
 ])
 _target_property_paths = Array[NodePath]([NodePath("visible")])
-stack/0/converter = SubResource("Resource_ryfo4")
+stack/0/converter = SubResource("Resource_bloln")
 allow_editor = true
 property_path = NodePath("visible")
 _object_path = NodePath("../Node3D")

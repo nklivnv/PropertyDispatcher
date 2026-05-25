@@ -1,6 +1,6 @@
 @tool
 @icon("../icons/property_dispatcher.svg")
-extends DispatchTool
+extends Node
 class_name PropertyDispatcher
 
 
