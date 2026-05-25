@@ -1,24 +1,28 @@
 @tool
 @icon("../icons/property_dispatcher.svg")
-extends Node
+extends DispatchTool
 class_name PropertyDispatcher
-
-
-const FUNCS: GDScript = preload("funcs.gd")
 
 
 enum UpdateMode {PHYSICS, IDLE, MANUAL}
 
 
+
+@export_tool_button("Update") var update_action := func() -> void:
+	if not allow_editor and Engine.is_editor_hint(): push_warning("allow_editor != true")
+	else: update()
+
+
+@export var allow_editor: bool
 @export var update_mode := UpdateMode.MANUAL
 
 
-@export_custom(PROPERTY_HINT_NODE_PATH_VALID_TYPES, "", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED)
+@export_custom(PROPERTY_HINT_NODE_PATH_VALID_TYPES, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED)
 var object_path: NodePath:
-	get: return object_path
+	get: return _object_path
 	set(new):
-		if object_path == new: return 
-		object_path = new
+		if _object_path == new: return 
+		_object_path = new
 		if is_inside_tree(): _on_object_path_changed()
 
 
@@ -38,6 +42,7 @@ var value: Variant:
 	set = set_value
 
 
+@export_storage var _object_path: NodePath
 var _object: Object
 var _value: Variant
 
@@ -45,7 +50,7 @@ var _value: Variant
 signal value_changed(value: Variant)
 
 
-func _ready() -> void:_on_object_path_changed()
+func _ready() -> void: _on_object_path_changed()
 
 
 func _process(_delta: float) -> void:
@@ -56,7 +61,9 @@ func _physics_process(_delta: float) -> void:
 	if update_mode == UpdateMode.PHYSICS: update()
 
 
-func update() -> void: set_value(get_value())
+func update() -> void:
+	if not allow_editor and Engine.is_editor_hint(): return
+	set_value(get_value())
 
 
 func _on_object_path_changed() -> void:
@@ -88,12 +95,12 @@ func _validate_property(p: Dictionary) -> void:
 		"property_path":
 			p.type = TYPE_STRING
 			p.hint = PROPERTY_HINT_ENUM_SUGGESTION
-			p.hint_string = ",".join(FUNCS.get_object_property_names(object)) if object and not is_same(object, self) else ""
+			p.hint_string = ",".join(get_object_property_names(object)) if object and not is_same(object, self) else ""
 			p.usage = (PROPERTY_USAGE_DEFAULT if object else PROPERTY_USAGE_NONE) | PROPERTY_USAGE_NIL_IS_VARIANT | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED
 		"value":
-			if object and property_path: p.type = typeof(get_value())
-			if object and is_same(object, get_value()): p.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY
-			else: p.usage = (PROPERTY_USAGE_EDITOR if object else PROPERTY_USAGE_DEFAULT) | PROPERTY_USAGE_NIL_IS_VARIANT
+			p.hint = PROPERTY_HINT_NODE_TYPE if get_value() is Node else PROPERTY_HINT_NONE
+			if object: p.type = typeof(get_value())
+			p.usage = (PROPERTY_USAGE_EDITOR if object else PROPERTY_USAGE_DEFAULT) | PROPERTY_USAGE_NIL_IS_VARIANT
 
 
 func _property_can_revert(property: StringName) -> bool:
@@ -106,3 +113,9 @@ func _property_get_revert(property: StringName) -> Variant:
 		"value" when object and StringName(property_path) in object:
 			return ClassDB.class_get_property_default_value(object.get_class(), StringName(property_path))
 	return null
+
+
+static func get_object_property_names(object: Object, usage: PropertyUsageFlags = PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_SCRIPT_VARIABLE) -> PackedStringArray:
+	return [] if not object else object.get_property_list(
+		).filter(func(p: Dictionary) -> bool: return p.usage & usage
+		).map(func(p: Dictionary) -> String: return p.name)

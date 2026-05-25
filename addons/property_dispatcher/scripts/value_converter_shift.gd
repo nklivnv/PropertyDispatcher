@@ -6,22 +6,16 @@ class_name ValueConverterShift
 @export_tool_button("Shift") var shift_action := shift
 
 
-@export var array: Array:
-	set(new):
-		array = new
-		set_index(clampi(index, -1, len(array)-1))
-
-
+@export var array: Array: set = set_array
 @export var default_offset: int = 1
-
-
-@export var index: int = -1:
-	set = set_index
-
-
+@export var index: int = -1: set = set_index
 @export_custom(PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY | PROPERTY_USAGE_NIL_IS_VARIANT)
-var value: Variant:
-	get = get_value
+var value: Variant: get = get_value
+
+
+func set_array(new: Array) -> void:
+	array = new
+	set_index(clampi(index, -1, len(array)-1))
 
 
 func get_value() -> Variant: return array[index] if index != -1 else null

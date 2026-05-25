@@ -4,8 +4,6 @@ extends PropertyDispatcher
 class_name PropertyConverter 
 
 
-@export_tool_button("Update") var update_action := update
-@export var allow_editor: bool = true
 @export var converter: ValueConverter
 
 

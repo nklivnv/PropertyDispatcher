@@ -13,8 +13,13 @@ func convert(target: Variant) -> Variant:
 		push_error("ValueConverterSpring.convert() - Type error")
 		return target
 	
+	return critically_damped_step(target, frequency)
+
+
+func critically_damped_step(target: float, frequency: float) -> float:
 	var delta: float = minf(1.0 / Engine.get_frames_per_second(), 0.033)
 	var force: float = frequency * frequency * (target - value) - 2.0 * frequency * speed
 	speed += force * delta
 	value += speed * delta
 	return value
+

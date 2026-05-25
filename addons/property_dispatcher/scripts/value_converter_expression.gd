@@ -3,9 +3,6 @@ extends ValueConverter
 class_name ValueConverterExpression
 
 
-const FUNCS: GDScript = preload("funcs.gd")
-
-
 static var _engine_singletons: Array
 var _expr: Expression
 
@@ -16,19 +13,19 @@ var _expr: Expression
 @export var include_engine_singletons: bool:
 	set(new):
 		include_engine_singletons = new
-		FUNCS.SingleCall.request(_update_expression)
+		SingleCall.request(_update_expression)
 
 
 @export_custom(PROPERTY_HINT_EXPRESSION, "") var expression: String:
 	set(new):
 		expression = new
-		FUNCS.SingleCall.request(_update_expression)
+		SingleCall.request(_update_expression)
 
 
 @export var input_names: PackedStringArray:
 	set(new):
 		input_names = new
-		FUNCS.SingleCall.request(_update_expression)
+		SingleCall.request(_update_expression)
 
 
 @export var input_values: Array

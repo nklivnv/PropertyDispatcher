@@ -4,10 +4,6 @@ extends PropertyDispatcher
 class_name PropertyConnector
 
 
-@export_tool_button("Update") var update_action := update
-
-
-@export var allow_editor: bool
 @export_storage var _converters: Array[ValueConverter]
 @export_storage var _target_object_paths: Array[NodePath]
 @export_storage var _target_objects: Array[Object]
@@ -21,20 +17,18 @@ func _enter_tree() -> void:
 
 
 func _update_target_objects() -> void:
-	for i in target_count:
+	for i in len(_target_object_paths):
 		var path: NodePath = _target_object_paths[i]
 		if path: _on_target_object_path_changed(i)
 
 
 func update() -> void:
-	
-	if not allow_editor and Engine.is_editor_hint(): push_warning("PropertyConnector.update() - allow_editor != true")
-	else:
-		var converted_value: Variant = get_value()
-		for i in target_count:
-			var converter: ValueConverter = _converters[i]
-			if converter: converted_value = converter.convert(converted_value)
-			target_set_value(i, converted_value)
+	if not allow_editor and Engine.is_editor_hint(): return
+	var converted_value: Variant = get_value()
+	for i in target_count:
+		var converter: ValueConverter = _converters[i]
+		if converter: converted_value = converter.convert(converted_value)
+		target_set_value(i, converted_value)
 
 
 var target_count: int:
@@ -69,9 +63,12 @@ func _get_property_list() -> Array[Dictionary]:
 				usage = ((PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_READ_ONLY) if target_object_path else PROPERTY_USAGE_DEFAULT) | PROPERTY_USAGE_UPDATE_ALL_IF_MODIFIED},
 			{ name = "stack/%d/property_path" % i, type = TYPE_STRING,
 				hint = PROPERTY_HINT_ENUM_SUGGESTION,
-				hint_string = "" if target_object == self else ",".join(FUNCS.get_object_property_names(target_object)),
+				hint_string = "" if target_object == self else ",".join(get_object_property_names(target_object)),
 				usage = (PROPERTY_USAGE_EDITOR if target_object else PROPERTY_USAGE_NONE) | PROPERTY_USAGE_NIL_IS_VARIANT},
-			{ name = "stack/%d/value" % i, type = TYPE_NIL, usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NIL_IS_VARIANT},
+			{ name = "stack/%d/value" % i,
+				hint = PROPERTY_HINT_NODE_TYPE if target_get_value(i) is Node else PROPERTY_HINT_NONE,
+				type = typeof(target_get_value(i)) if object else TYPE_NIL,
+				usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NIL_IS_VARIANT},
 		])
 	
 	return property_list
